@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package turknet.reactnative;
 
 import java.util.Arrays;
 import java.util.Collections;

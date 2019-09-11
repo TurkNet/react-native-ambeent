@@ -53,6 +53,16 @@ repositories {
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactnativeVersion', '+')}"
+    
+    //implementation "com.google.android.gms:play-services:12.0.1"
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+    implementation 'fr.bmartel:jspeedtest:1.32.1'
+    //implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+    compile files('libs/ambeentutil-release.aar')
 }
 
 def configureReactNativePom(def pom) {
@@ -62,7 +72,7 @@ def configureReactNativePom(def pom) {
         name packageJson.title
         artifactId packageJson.name
         version = packageJson.version
-        group = "com.reactlibrary"
+        group = "turknet.reactnative"
         description packageJson.description
         url packageJson.repository.baseUrl
 
