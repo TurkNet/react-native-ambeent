@@ -7,7 +7,7 @@ export default {
         discoverNetwork = true,
         measureSpeed = true,
         detectRouterModel = true,
-    }) {
+    } = {}) {
         return Ambeent.sense(discoverNetwork, measureSpeed, detectRouterModel);
     }
 };

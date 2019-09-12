@@ -4,6 +4,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import com.wireless.ambeentutil.Ambeent;
 import android.util.Log;
 
@@ -25,9 +26,19 @@ public class AmbeentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sense(Boolean discoverNetwork, Boolean measureSpeed, Boolean detectRouterModel) {
-        Double bw = this.ambeent.sense(discoverNetwork, measureSpeed, detectRouterModel);
-        Log.d("react-native-ambeent", String.valueOf(bw));
+    public void sense(
+        Boolean discoverNetwork,
+        Boolean measureSpeed,
+        Boolean detectRouterModel,
+        Promise promise
+    ) {
+        try {
+            Double bw = this.ambeent.sense(discoverNetwork, measureSpeed, detectRouterModel);
+            Log.d("react-native-ambeent", String.valueOf(bw));
+            promise.resolve(bw);
+        } catch (e) {
+            promise.reject("E_AMBEENT_ERROR", e);
+        }
     }
 
     @ReactMethod
