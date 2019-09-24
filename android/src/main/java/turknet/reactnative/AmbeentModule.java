@@ -17,13 +17,33 @@ public class AmbeentModule extends ReactContextBaseJavaModule {
     public AmbeentModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-
-        this.ambeent = new Ambeent(reactContext);
     }
 
     @Override
     public String getName() {
         return "Ambeent";
+    }
+
+    @ReactMethod
+    public void init(
+        String companyID,
+        String customerID,
+        Promise promise
+    ) {
+
+        if (this.ambeent != null) {
+            promise.resolve();
+            return;
+        }
+        
+        try {
+            this.ambeent = new Ambeent(this.reactContext, companyID, customerID);
+            Log.d("react-native-ambeent", "initilized with companyID: " + companyID + " customerID:" + customerID);
+            promise.resolve();
+        } catch (Exception e) {
+            promise.reject("E_AMBEENT_ERROR", e);
+        }
+
     }
 
     @ReactMethod
@@ -33,6 +53,11 @@ public class AmbeentModule extends ReactContextBaseJavaModule {
         Boolean detectRouterModel,
         Promise promise
     ) {
+        if (this.ambeent == null) {
+            promise.reject("E_AMBEENT_NOT_INITIALIZED");
+            return;
+        }
+
         try {
             Double bw = this.ambeent.sense(discoverNetwork, measureSpeed, detectRouterModel);
             Log.d("react-native-ambeent", String.valueOf(bw));
@@ -42,9 +67,4 @@ public class AmbeentModule extends ReactContextBaseJavaModule {
         }
     }
 
-    @ReactMethod
-    public void sampleMethod(String stringArgument, int numberArgument, Callback callback) {
-        // TODO: Implement some actually useful functionality
-        callback.invoke("Received numberArgument: " + numberArgument + " stringArgument: " + stringArgument);
-    }
 }

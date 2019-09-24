@@ -1,5 +1,8 @@
 export default {
+    init() {
+        return Promise.resolve();
+    },
     sense() {
-        return null;
+        return Promise.resolve();
     }
 };
